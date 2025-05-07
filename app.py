@@ -32,11 +32,12 @@ st.write("Datos cargados:", data.head())
 # -----------------------
 # CONTROLES DE USUARIO
 if not data.empty and "timestamp" in data.columns:
-    sim_time = st.slider("Selecciona el tiempo de simulación",
-                         min_value=data["timestamp"].min(),
-                         max_value=data["timestamp"].max(),
-                         value=data["timestamp"].min(),
-                         format="HH:mm")
+sim_time = st.slider("Selecciona el tiempo de simulación",
+                     min_value=data["timestamp"].min().to_pydatetime(),
+                     max_value=data["timestamp"].max().to_pydatetime(),
+                     value=data["timestamp"].min().to_pydatetime(),
+                     format="HH:mm")
+
 else:
     st.error("No se puede simular porque no hay datos válidos.")
     st.stop()
