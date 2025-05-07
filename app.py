@@ -13,6 +13,8 @@ st.markdown("Visualización de rutas, KPIs logísticos y alertas inteligentes.")
 
 # -----------------------
 # SIMULACIÓN DE DATOS
+import pandas as pd
+
 data = pd.DataFrame({
     "vehiculo": ["Camión 1"] * 3 + ["Tren 1"] * 3,
     "lat": [21.8823, 21.8850, 21.8900, 21.8700, 21.8750, 21.8800],
