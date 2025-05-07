@@ -12,7 +12,7 @@ st.title("🚂 Simulador Logístico CEMEX")
 st.markdown("Visualización de rutas, KPIs logísticos y alertas inteligentes.")
 
 # -----------------------
-# SIMULACIÓN DE DATOS
+# SIMULACIÓN DE DATOS (¡IMPORTANTE! ESTE BLOQUE DEBE ESTAR COMPLETO Y CORRECTO)
 data = pd.DataFrame({
     "vehiculo": ["Camión 1"] * 3 + ["Tren 1"] * 3,
     "lat": [21.8823, 21.8850, 21.8900, 21.8700, 21.8750, 21.8800],
@@ -25,23 +25,27 @@ data = pd.DataFrame({
 })
 data["timestamp"] = pd.to_datetime(data["timestamp"])
 
+# Depuración (opcional)
+st.write("Columnas disponibles:", data.columns.tolist())
+st.write("Datos cargados:", data.head())
+
 # -----------------------
 # CONTROLES DE USUARIO
-if not data.empty:
+if not data.empty and "timestamp" in data.columns:
     sim_time = st.slider("Selecciona el tiempo de simulación",
                          min_value=data["timestamp"].min(),
                          max_value=data["timestamp"].max(),
                          value=data["timestamp"].min(),
                          format="HH:mm")
 else:
-    st.error("No hay datos disponibles para simular.")
+    st.error("No se puede simular porque no hay datos válidos.")
     st.stop()
 
 # -----------------------
 # MAPA
 m = folium.Map(location=[21.88, -102.28], zoom_start=13)
 
-# Filtra y pinta los puntos activos a la hora seleccionada
+# Pintar rutas filtradas
 for vehiculo in data["vehiculo"].unique():
     df_v = data[(data["vehiculo"] == vehiculo) & (data["timestamp"] <= sim_time)]
     if not df_v.empty:
