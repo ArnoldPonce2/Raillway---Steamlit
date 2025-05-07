@@ -13,8 +13,6 @@ st.markdown("Visualización de rutas, KPIs logísticos y alertas inteligentes.")
 
 # -----------------------
 # SIMULACIÓN DE DATOS
-import pandas as pd
-
 data = pd.DataFrame({
     "vehiculo": ["Camión 1"] * 3 + ["Tren 1"] * 3,
     "lat": [21.8823, 21.8850, 21.8900, 21.8700, 21.8750, 21.8800],
@@ -25,13 +23,19 @@ data = pd.DataFrame({
     ],
     "volumen_ton": [100, 120, 110, 90, 130, 95]
 })
-
 data["timestamp"] = pd.to_datetime(data["timestamp"])
 
 # -----------------------
 # CONTROLES DE USUARIO
-sim_time = st.slider("Selecciona el tiempo de simulación", min_value=data["timestamp"].min(),
-                     max_value=data["timestamp"].max(), value=data["timestamp"].min(), format="HH:mm")
+if not data.empty:
+    sim_time = st.slider("Selecciona el tiempo de simulación",
+                         min_value=data["timestamp"].min(),
+                         max_value=data["timestamp"].max(),
+                         value=data["timestamp"].min(),
+                         format="HH:mm")
+else:
+    st.error("No hay datos disponibles para simular.")
+    st.stop()
 
 # -----------------------
 # MAPA
